@@ -14,3 +14,23 @@
       apt:
         name: wireshark
         state: latest
+
+- name: Install and start NGINX
+  hosts: lb
+  remote_user: azureuser
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Ensure NGINX is installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure NGINX is started and enabled
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
